@@ -14,13 +14,18 @@ namespace Typist
             KeyboardHook hook = new KeyboardHook();
             WordsInterceptor interceptor = new WordsInterceptor(hook);
 
-            hook.KeyPressed += Hook_KeyPressed;          
+            hook.KeyPressed += Hook_KeyPressed;
             interceptor.WordTyped += Interceptor_WordTyped;
 
             Console.WriteLine("Intercepting keyboard input... press F12 to stop and see the results.");
 
             hook.enable();           
             Console.ReadLine();           
+        }
+
+        private static void Interceptor_WordTyped(object sender, WordsInterceptor.WordTypedEventArgs e)
+        {
+            Console.WriteLine("{0}  ({1:N0} ms)", e.word, e.typingTime);
         }
 
         private static void Hook_KeyPressed(object sender, string key)
@@ -35,10 +40,6 @@ namespace Typist
             }
         }
 
-        private static void Interceptor_WordTyped(object sender, string e)
-        {
-            Console.WriteLine(e);
-        }
-     
+      
     }
 }

@@ -63,7 +63,10 @@ namespace Typist
         {            
             if (currentWord.Length > 1)
             {
-                OnWordTyped(currentWord.ToString());
+                var timeNow = getTimeNow();
+                var typingDuration = timeNow - startTimeStamp;
+                var eventArgs = new WordTypedEventArgs() { word = currentWord.ToString(), typingTime = typingDuration };
+                OnWordTyped(eventArgs);
             }
 
             reset();
@@ -89,18 +92,29 @@ namespace Typist
         private void setupForNewWord()
         {
             // prepare values anew
-            startTimeStamp = DateTime.UtcNow.TimeOfDay.TotalMilliseconds;
+            startTimeStamp = getTimeNow();
         }
 
-        protected virtual void OnWordTyped(String word)
+        private Double getTimeNow()
         {
-            EventHandler<String> handler = WordTyped;
+            return DateTime.UtcNow.TimeOfDay.TotalMilliseconds;
+        }
+
+        protected virtual void OnWordTyped(WordTypedEventArgs e)
+        {
+            EventHandler<WordTypedEventArgs> handler = WordTyped;
             if (handler != null)
             {
-                handler(this, word);
+                handler(this, e);
             }
         }
 
-        public event EventHandler<String> WordTyped;
+        public event EventHandler<WordTypedEventArgs> WordTyped;
+
+        public class WordTypedEventArgs : EventArgs
+        {
+            public string word { get; set; }
+            public double typingTime { get; set; }
+        }
     }
 }
