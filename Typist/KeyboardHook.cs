@@ -1,11 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace Typist
 {
+    /// <summary>
+    /// A keyboard hook wrapper offering simple access to keyDown events from the system's input loop.
+    /// Simplifies useage of the low level hooks by providing a simple interface. 
+    /// 
+    /// Each key press fires an event which carries an easy to understand string representation of 
+    /// the pressed key.
+    /// </summary>
     class KeyboardHook
     {
         private const int WH_KEYBOARD_LL = 13;
@@ -16,11 +22,7 @@ namespace Typist
 
         private LowLevelKeyboardProc _proc;
 
-        private IntPtr _hookID = IntPtr.Zero;
-
-        private List<string> WORD_ENDING_KEYS = new List<string> { "Return", "Space", "OemPeriod", "OemComma" };
-
-        private const string KEY_BACKSPACE = "Back";
+        private IntPtr _hookID = IntPtr.Zero;                
 
         public KeyboardHook()
         {
@@ -57,53 +59,22 @@ namespace Typist
             {
                 int vkCode = Marshal.ReadInt32(lParam);
                 var key = (Keys)vkCode;
-                var text = key.ToString();
-                if (text.Length == 1)
-                {
-                    OnCharacterTyped(Char.Parse(text));
-                }
-                else if (WORD_ENDING_KEYS.Contains(text))
-                {
-                    OnWordEnded(EventArgs.Empty);
-                }
-                else if (text == KEY_BACKSPACE)
-                {
-                    OnBackSpaceDown(EventArgs.Empty);
-                }
+                var textualRepresentation = key.ToString();
+                OnKeyPressed(textualRepresentation);              
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
 
-        protected virtual void OnCharacterTyped(Char c)
+        protected virtual void OnKeyPressed(String key)
         {
-            EventHandler<Char> handler = CharacterTyped;
+            EventHandler<String> handler = KeyPressed;
             if (handler != null)
             {
-                handler(this, c);
+                handler(this, key);
             }
-        }
+        }     
 
-        protected virtual void OnWordEnded(EventArgs e)
-        {
-            EventHandler handler = WordEnded;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-
-        protected virtual void OnBackSpaceDown(EventArgs e)
-        {
-            EventHandler handler = BackSpaceDown;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-
-        public event EventHandler<Char> CharacterTyped;
-        public event EventHandler WordEnded;
-        public event EventHandler BackSpaceDown;
+        public event EventHandler<String> KeyPressed;    
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr SetWindowsHookEx(int idHook,

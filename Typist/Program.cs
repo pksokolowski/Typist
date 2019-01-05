@@ -11,29 +11,19 @@ namespace Typist
         static void Main(string[] args)
         {
             KeyboardHook hook = new KeyboardHook();
+            WordsInterceptor interceptor = new WordsInterceptor(hook);
 
-            hook.CharacterTyped += Hook_CharacterTyped;        
-            hook.WordEnded += Hook_WordEnded;
-            hook.BackSpaceDown += Hook_BackSpaceDown;
+            interceptor.WordTyped += Interceptor_WordTyped;       
 
             hook.enable();
             Console.ReadLine();
             hook.disable();
         }
 
-        private static void Hook_BackSpaceDown(object sender, EventArgs e)
+        private static void Interceptor_WordTyped(object sender, string e)
         {
-            Console.Write("\b \b");         
+            Console.WriteLine(e);
         }
-
-        private static void Hook_CharacterTyped(object sender, char e)
-        {
-            Console.Write(e);
-        }
-
-        private static void Hook_WordEnded(object sender, EventArgs e)
-        {
-            Console.WriteLine("");
-        }
+     
     }
 }
