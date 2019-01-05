@@ -38,6 +38,7 @@ namespace Typist
         public void disable()
         {
             UnhookWindowsHookEx(_hookID);
+            Application.ExitThread();
         }
 
         private IntPtr SetHook(LowLevelKeyboardProc proc)

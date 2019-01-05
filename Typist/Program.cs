@@ -30,8 +30,7 @@ namespace Typist
             {
                 case "F12":                    
                     hook.disable();
-                    Console.WriteLine("Hook disabled.");
-                    Application.ExitThread();
+                    Console.WriteLine("Hook disabled.");                    
                     break;             
             }
         }
