@@ -47,7 +47,7 @@ namespace Typist
             }
         }
 
-        private String currentWord = "";
+        private StringBuilder currentWord = new StringBuilder();
         private double startTimeStamp = 0;
 
         private void addChar(char c)
@@ -56,14 +56,14 @@ namespace Typist
             {
                 setupForNewWord();
             }
-            currentWord += c;
+            currentWord.Append(c);
         }
 
         private void endWord()
         {            
             if (currentWord.Length > 1)
             {
-                OnWordTyped(currentWord);
+                OnWordTyped(currentWord.ToString());
             }
 
             reset();
@@ -78,12 +78,12 @@ namespace Typist
                 reset();
                 return;
             }
-            currentWord = currentWord.Substring(0, currentWord.Length - 1);
+            currentWord = currentWord.Remove(currentWord.Length - 1, 1);
         }
 
         private void reset()
         {
-            currentWord = "";
+            currentWord.Clear();
         }
 
         private void setupForNewWord()
