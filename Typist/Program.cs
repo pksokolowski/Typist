@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Typist
 {
@@ -13,11 +14,26 @@ namespace Typist
             KeyboardHook hook = new KeyboardHook();
             WordsInterceptor interceptor = new WordsInterceptor(hook);
 
-            interceptor.WordTyped += Interceptor_WordTyped;       
+            hook.KeyPressed += Hook_KeyPressed;          
+            interceptor.WordTyped += Interceptor_WordTyped;
 
-            hook.enable();
-            Console.ReadLine();
-            hook.disable();
+            Console.WriteLine("Intercepting keyboard input... press F12 to stop and see the results.");
+
+            hook.enable();           
+            Console.ReadLine();           
+        }
+
+        private static void Hook_KeyPressed(object sender, string key)
+        {
+            KeyboardHook hook = sender as KeyboardHook;
+            switch (key)
+            {
+                case "F12":                    
+                    hook.disable();
+                    Console.WriteLine("Hook disabled.");
+                    Application.ExitThread();
+                    break;             
+            }
         }
 
         private static void Interceptor_WordTyped(object sender, string e)
