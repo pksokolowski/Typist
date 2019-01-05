@@ -16,7 +16,7 @@ namespace Typist
     {
         private KeyboardHook hook;
 
-        private List<string> WORD_ENDING_KEYS = new List<string> { "Return", "Space", "OemPeriod", "OemComma" };
+        private List<string> WORD_ENDING_KEYS = new List<string> { "Return", "Space", "OemPeriod", "Oemcomma" };
 
         private const string KEY_BACKSPACE = "Back";
 
