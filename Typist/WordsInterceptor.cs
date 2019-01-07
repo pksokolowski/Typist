@@ -5,12 +5,9 @@ using System.Text;
 namespace Typist
 {
     /// <summary>
-    /// Intercepts keyboard input and builds words from it,
-    /// ignoring characters that aren't letters, and 
-    /// firing an event upon word completion, as judged 
-    /// by use of a key from WORD_ENDING_KEYS list.
-    /// It handles errors correction (backspace) and 
-    /// captures additional statistics regarding writing performance.
+    /// Intercepts keyboard input and builds words from it, ignoring characters that aren't letters, and 
+    /// firing an event upon word completion, as judged by use of a key from the WORD_ENDING_KEYS list.
+    /// It handles errors correction (backspace) and captures additional statistics regarding writing performance.
     /// </summary>
     class WordsInterceptor
     {
@@ -19,10 +16,7 @@ namespace Typist
         private List<string> WORD_ENDING_KEYS = new List<string> { "Return", "Space", "OemPeriod", "Oemcomma", "OemQuestion", "D1" };
 
         private const string KEY_BACKSPACE = "Back";
-
-        /// <summary>
-        /// 
-        /// </summary>
+    
         /// <param name="hook">A keyboard hook object to use for input, 
         /// make sure it's enabled when you want to intercept words written</param>
         public WordsInterceptor(KeyboardHook hook)

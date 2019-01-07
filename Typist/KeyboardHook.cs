@@ -6,12 +6,8 @@ using System.Windows.Forms;
 namespace Typist
 {
     /// <summary>
-    /// A keyboard hook wrapper offering simple access
-    /// to keyDown events from the system's input loop.
-    /// Simplifies useage of the low level hooks.
-    /// 
-    /// Each key press fires an event which carries an
-    /// easy to understand string representation of 
+    /// A keyboard hook wrapper offering simple access to keyDown events from the system's input loop.
+    /// Each key press fires an event which carries an easy to understand string representation of 
     /// the pressed key.
     /// </summary>
     class KeyboardHook
