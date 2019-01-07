@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Typist
 {
     /// <summary>
-    /// Intercepts keyboard input and builds words from it, ignoring characters that aren't letters, and 
-    /// firing an event upon word completion, as judged by use of a return, comma or perior characters.
-    /// It handles errors correction (backspace) as well as captures additional statistics regarding 
-    /// writing performance.
+    /// Intercepts keyboard input and builds words from it,
+    /// ignoring characters that aren't letters, and 
+    /// firing an event upon word completion, as judged 
+    /// by use of a key from WORD_ENDING_KEYS list.
+    /// It handles errors correction (backspace) and 
+    /// captures additional statistics regarding writing performance.
     /// </summary>
     class WordsInterceptor
     {
@@ -81,7 +81,7 @@ namespace Typist
                 reset();
                 return;
             }
-            currentWord = currentWord.Remove(currentWord.Length - 1, 1);
+            currentWord.Remove(currentWord.Length - 1, 1);
         }
 
         private void reset()

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using static Typist.WritingAnalyst;
 
 namespace Typist
@@ -16,15 +11,13 @@ namespace Typist
 
         static void Main(string[] args)
         {
-
-
             hook.KeyPressed += Hook_KeyPressed;
             interceptor.WordTyped += Interceptor_WordTyped;
 
             Console.WriteLine("Intercepting keyboard input... press F12 to stop and see the results.");
 
             hook.enable();
-            Console.ReadLine();
+            Console.ReadLine();            
         }
 
         private static void Interceptor_WordTyped(object sender, WordsInterceptor.WordTypedEventArgs e)
@@ -39,7 +32,6 @@ namespace Typist
                 case "F12":
                     hook.disable();
                     showAnalysisResults();
-
                     break;
             }
         }
