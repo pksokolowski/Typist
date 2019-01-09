@@ -8,14 +8,14 @@ namespace Typist
     /// For now using a naive O(n log n) approach, 
     /// might later be replaced by a linear time solution.
     /// </summary>
-    class MedianCalculator
+    public class MedianCalculator
     {    
         public static double median(double[] arr)
         {
             Array.Sort(arr);
-            var medianIndex = Math.Max(0, (arr.Length / 2) - 1);
+            var medianIndex = Math.Max(0, (arr.Length / 2));
             var median = arr[medianIndex];
-            if (arr.Length > 2 && arr.Length % 2 != 0)
+            if (arr.Length >= 2 && arr.Length % 2 == 0)
             {
                 median = (median + arr[medianIndex + 1]) / 2;
             }
