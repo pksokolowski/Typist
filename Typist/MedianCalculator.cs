@@ -12,12 +12,13 @@ namespace Typist
     {    
         public static double median(double[] arr)
         {
+            if (arr.Length == 1) return arr[0];            
             Array.Sort(arr);
-            var medianIndex = Math.Max(0, (arr.Length / 2));
+            var medianIndex = (arr.Length / 2);
             var median = arr[medianIndex];
             if (arr.Length >= 2 && arr.Length % 2 == 0)
             {
-                median = (median + arr[medianIndex + 1]) / 2;
+                median = (median + arr[medianIndex - 1]) / 2;
             }
             return median;
         }
